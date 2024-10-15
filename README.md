@@ -13,4 +13,4 @@ page 3
 pick a genre, shows games with the highest reviews 
 
 page 4 
-maybe a recommendation thing by picking genres
+maybe a recommendation thing by picking genres and consoles
