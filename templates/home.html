@@ -1,16 +1,13 @@
-<!DOCTYPE html> 
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<link  rel="stylesheet" href="/static/style.css" type="text/css">
-  <title> Video Game Data - Home Page </title>
-</head>
-  <body>
-    <h1> About Video Game Data </h1>
-    <p> The data used in this website are all found in the CORGIS dataset project, and is found <a href="https://corgis-edu.github.io/corgis/json/video_games/".>here.</a> The data found in this list ranges from 2004 to 2008. The information on the dataset was gathered from crowd-sourced data on "How Long to Beat". </p>
-    <p> One of the statistics that is listed is whether a game is licensed or not. These licenses include a copyright license, which allows use of copyrighted assets like music, artwork and other things, trademark license, which allows use of a trademarked name, logo or brand, patent license, which allows use of patented technology, and a content license, allows devs to use certain characters or storylines. </p> 
-  </body>
-</html>
+{% extends "layout.html" %}
+
+#{% set active_page = "home" %}
+
+{% block title %}Home Page - Video Game Data{% endblock %}
+
+{% block content %}
+
+<h1> About Video Game Data </h1>
+<p> The data used in this website are all found in the CORGIS dataset project, and is found <a href="https://corgis-edu.github.io/corgis/json/video_games/".>here.</a> The data found in this list ranges from 2004 to 2008. The information on the dataset was gathered from crowd-sourced data on "How Long to Beat". </p>
+<p> One of the statistics that is listed is whether a game is licensed or not. These licenses include a copyright license, which allows use of copyrighted assets like music, artwork and other things, trademark license, which allows use of a trademarked name, logo or brand, patent license, which allows use of patented technology, and a content license, allows devs to use certain characters or storylines. </p> 
+
+{% endblock %}
