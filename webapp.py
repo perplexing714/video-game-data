@@ -71,3 +71,8 @@ def render_p3():
 if __name__=="__main__":
     app.run(debug=True)
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 130afd033d0a7e1b09834f5e0b1f8718d458f660
