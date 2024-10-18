@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+#{% set active_page = "page2" %}
+
+{% block title %}Page 2 - Video Game Data{% endblock %}
+
+{% block content %}
+
+<form action="/showFact">
+	<select name="game">
+	{{ game_options }}
+	</select>
+	<input type="submit" value="Get a fun fact!">
+        </form>
+        <div id="funFact">
+            <p>{{ funFact }}</p>
+        </div>
+	
+	
+{% endblock %}
