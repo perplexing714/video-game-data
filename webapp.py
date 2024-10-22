@@ -6,7 +6,7 @@ import json
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/") 
 def root(): 
     return redirect(url_for('render_main'))
 
@@ -21,36 +21,24 @@ def render_page2():
     
 @app.route("/showFact")
 def render_fact():
-    Titles = get_game_options()
-    Title = request.args.get('Title')
-    thing = game_highest_review(Title)
-    fact = "The game with the highest review score is " + Title + ", with an average rating of " + thing + "."
-    return render_template('home.html', game_options=Titles, funFact=fact)
+    titles = get_game_options()
+    title = request.args.get('title')
+    factTitle = title 
+    return render_template('page2.html', game_options=titles, funFactName=factTitle)
 
 
 def get_game_options():
     with open('video_games.json') as game_data:
         data = json.load(game_data)
-    Titles=[]
+    titles=[]
     for g in data:
-        if g["Title"] not in Titles:
-            Titles.append(g["Title"])
+        if g["Title"] not in titles:
+            titles.append(g["Title"])
     options=""
-    for s in Titles:
+    for s in titles:
         options += Markup("<option value=\"" + s + "\">" + s + "</option>") 
     return options
     
-def game_highest_review():
-    with open('video_games.json') as game_data:
-        data = json.load(game_data)
-    highest=0
-    thing = ""
-    for c in data:
-        if c["Title"] == Title:
-            if c["Metrics"]["Review Score"] > highest:
-                highest = c["Metrics"]["Review Score"]
-                thing = c["Title"]
-    return thing    
 """
 def county_most_under_18(state):
     with open('demographics.json') as demographics_data:
@@ -71,8 +59,3 @@ def render_p3():
 if __name__=="__main__":
     app.run(debug=True)
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 130afd033d0a7e1b09834f5e0b1f8718d458f660
