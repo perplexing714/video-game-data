@@ -7,7 +7,7 @@
 {% block content %}
 
 <form action="/showFact">
-	<select name="game">
+	<select name="title">
 	{{ game_options }}
 	</select>
 	<input type="submit" value="Get a fun fact!">
@@ -15,6 +15,7 @@
         <div id="funFact">
             <p>{{ funFactName }}</p>
         </div>
-	
-	
+		
 {% endblock %}
+
+<!-- ("<option value=\"" + s + "\">" + s + "</option>")
