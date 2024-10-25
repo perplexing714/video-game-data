@@ -6,16 +6,27 @@
 
 {% block content %}
 
+<div class="container">
+<h1> Fun Facts </h1>
+
 <form action="/showFact">
 	<select name="title">
 	{{ game_options }}
 	</select>
 	<input type="submit" value="Get a fun fact!">
         </form>
-        <div id="funFact">
-            <p>{{ funFactName }}</p>
-        </div>
-		
+        <div class="fact" id="funFact"> <p>{{ funFactName }}</p> </div>
+		<br>
+		<h2> Release Facts </h2>
+		<div class="fact"> {{ yearr }} </div>
+		<div class="fact"> {{ cons }} </div>
+		<div class="fact"> {{ rat }} </div>
+		<br>
+		<h2> Other </h2>
+		<div class="fact"> {{ usp }} </div>
+		<div class="fact"> {{ revs }} </div>
+		<div class="fact"> {{ sales }} </div>
+</div>
 {% endblock %}
 
 <!-- ("<option value=\"" + s + "\">" + s + "</option>")

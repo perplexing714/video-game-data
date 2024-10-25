@@ -6,7 +6,7 @@ import json
 
 app = Flask(__name__)
 
-@app.route("/home")
+@app.route("/")
 def render_main():
     return render_template('home.html')
     
@@ -17,10 +17,28 @@ def render_page2():
     
 @app.route("/showFact")
 def render_fact():
+    with open('video_games.json') as game_data:
+        game_data = json.load(game_data)
+        if "title" in request.args:      
+            title = request.args.get('title')
+            for titles in game_data:
+                if titles["Title"] == title:
+                    cons = titles["Release"]["Console"]
+                    rat = titles["Release"]["Rating"]
+                    yearr = titles["Release"]["Year"]
+                    usp = titles["Metrics"]["Used Price"]
+                    revs = titles["Metrics"]["Review Score"]
+                    sales = titles["Metrics"]["Sales"]               
+    factTitle = "For " + title + ", here are some fun facts:"
+    uspF = "Used Price for this game: " + str(usp) + "."
+    revsF = "Review Score (out of 100): " + str(revs) + "."
+    salesF = "Sales (in millions): " + str(sales) + "."
+    yearrF = "Year of Release: " + str(yearr) + "."
+    ratF = "Game rating: " + rat + "."
+    consF = "Released on what console?: " + str(cons) + "."
+    
     titles = get_game_options()
-    title = request.args.get('title')
-    factTitle = "For " + title + ", here are the following stats:"
-    return render_template('page2.html', game_options=titles, funFactName=factTitle)
+    return render_template('page2.html', game_options=titles, funFactName=factTitle, usp=uspF, revs=revsF, sales=salesF, yearr=yearrF, rat=ratF, cons=consF)
 
 def get_game_options():
     with open('video_games.json') as game_data:
