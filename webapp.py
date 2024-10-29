@@ -30,15 +30,16 @@ def render_fact():
                     revs = titles["Metrics"]["Review Score"]
                     sales = titles["Metrics"]["Sales"]               
     factTitle = "For " + title + ", here are some fun facts:"
-    uspF = "Used Price for this game: " + str(usp) + "."
+    uspF = "Used Price for this game: " + usp + "."
     revsF = "Review Score (out of 100): " + str(revs) + "."
     salesF = "Sales (in millions): " + str(sales) + "."
     yearrF = "Year of Release: " + str(yearr) + "."
     ratF = "Game rating: " + rat + "."
     consF = "Released on what console?: " + str(cons) + "."
-    
     titles = get_game_options()
-    return render_template('page2.html', game_options=titles, funFactName=factTitle, usp=uspF, revs=revsF, sales=salesF, yearr=yearrF, rat=ratF, cons=consF)
+    div1 = "Release Facts:"
+    div2 = "Other:"
+    return render_template('page2.html', div1=div1, div2=div2, game_options=titles, funFactName=factTitle, usp=uspF, revs=revsF, sales=salesF, yearr=yearrF, rat=ratF, cons=consF)
 
 def get_game_options():
     with open('video_games.json') as game_data:
@@ -52,6 +53,30 @@ def get_game_options():
         options += Markup("<option value=\"" + s + "\">" + s + "</option>") 
     return options
 
+def get_year_options():
+    with open('video_games.json') as game_data:
+        data = json.load(game_data)
+    years=[]
+    for g in data:
+        if g["Release"]["Year"] not in years:
+            years.append(g["Release"]["Year"])
+    options=""
+    for f in years:
+        options += Markup("<option value=\"" + str(f) + "\">" + str(f) + "</option>") 
+    return options
+    
+def get_console_options():
+    with open ('video_games.json') as game_data: 
+        data = json.load(game_data)
+    consoles=[]
+    for g in data:
+        if g["Release"]["Console"] not in consoles:
+            consoles.append(g["Release"]["Console"])
+    options=""
+    for k in consoles:
+        options += Markup("<option value=\"" + str(k) + "\">" + str(k) + "</option>") 
+    return options      
+
 @app.route("/p3")
 def render_page3(): 
     years = get_year_options()
@@ -63,18 +88,7 @@ def render_test():
     year = request.args.get('review')
     reviewName = year
     return render_template('page3.html', year_options=years, reviewName=reviewName)
-    
-def get_year_options():
-    with open('video_games.json') as game_data:
-        data2 = json.load(game_data)
-    years=[]
-    for g in data2:
-        if g["Release"]["Year"] not in years:
-            years.append(g["Release"]["Year"])
-    options=""
-    for f in years:
-        options += Markup("<option value=\"" + str(f) + "\">" + str(f) + "</option>") 
-    return options
+      
     
 @app.route("/showHighestReview")
 def render_fact2():
@@ -87,31 +101,21 @@ def render_fact2():
 def highest_review_score_year():
     with open('video_games.json') as game_data:
         data3 = json.load(game_data)
-    year = request.args['year']
-    highest = 50
+    year = request.args.get('review')
+    highest = 0
     rev = "" 
     for r in data3:
-        if r["Title"] == title:
+        if r["Title"] == year:
             if r["Metrics"]["Review Score"] > highest: 
                 highest = r["Metrics"]["Review Score"]
                 rev = r["Title"]
     return rev 
-"""
-def county_most_under_18(state):
-    with open('demographics.json') as demographics_data:
-        counties = json.load(demographics_data)
-    highest=0
-    county = ""
-    for c in counties:
-        if c["State"] == state:
-            if c["Age"]["Percent Under 18 Years"] > highest:
-                highest = c["Age"]["Percent Under 18 Years"]
-                county = c["County"]
-    return county
-"""
-@app.route("/p3")
-def render_p3():
-    return render_template('page3.html')
+    
+@app.route("/p4")
+def render_page4():
+    years = get_year_options()
+    consoles = get_console_options()
+    return render_template('page4.html', console_options=consoles, year_options=years)
     
 if __name__=="__main__":
     app.run(debug=True)

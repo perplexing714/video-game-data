@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+#{% set active_page = "page4" %}
+
+{% block title %}Page 4 - Video Game Data{% endblock %}
+
+{% block content %}
+
+<div class="container">
+<h1> Fun Facts </h1>
+
+<form action="/showFact">
+	<select name="title" required>
+	{{ console_options }}
+	</select>
+	<input type="submit" value="Make a recommendation">
+        </form>
+</div>
+{% endblock %}
+
