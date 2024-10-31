@@ -9,13 +9,14 @@
 <div class="container"> 
 <h1> What game has the highest average reviews per release year? </h1>
 <form action="/showHighestReview">
-	<select name="review">
+	<select name="year">
 	{{ year_options }}
 	</select>
 	<input type="submit" value="Get highest">
-        </form>
+</form>
+<br>
         <div id="highReview">
-            <p>{{ reviewName }}</p>
+            <p>{{ selYear }}</p>
         </div>
 </div>
 {% endblock %}

@@ -30,7 +30,7 @@ def render_fact():
                     revs = titles["Metrics"]["Review Score"]
                     sales = titles["Metrics"]["Sales"]               
     factTitle = "For " + title + ", here are some fun facts:"
-    uspF = "Used Price for this game: " + usp + "."
+    uspF = "Used Price for this game: " + str(usp) + "."
     revsF = "Review Score (out of 100): " + str(revs) + "."
     salesF = "Sales (in millions): " + str(sales) + "."
     yearrF = "Year of Release: " + str(yearr) + "."
@@ -64,58 +64,46 @@ def get_year_options():
     for f in years:
         options += Markup("<option value=\"" + str(f) + "\">" + str(f) + "</option>") 
     return options
-    
-def get_console_options():
-    with open ('video_games.json') as game_data: 
-        data = json.load(game_data)
-    consoles=[]
-    for g in data:
-        if g["Release"]["Console"] not in consoles:
-            consoles.append(g["Release"]["Console"])
-    options=""
-    for k in consoles:
-        options += Markup("<option value=\"" + str(k) + "\">" + str(k) + "</option>") 
-    return options      
 
 @app.route("/p3")
 def render_page3(): 
     years = get_year_options()
     return render_template('page3.html', year_options=years)
-
-@app.route("/year")
-def render_test(): 
-    years = get_year_options()
-    year = request.args.get('review')
-    reviewName = year
-    return render_template('page3.html', year_options=years, reviewName=reviewName)
-      
     
 @app.route("/showHighestReview")
 def render_fact2():
     years = get_year_options()
-    year = request.args.get('review')
-    rev = highest_review_score_year()
+    year = request.args.get('year')
+    rev = highest_review_score_year(year)
+    selYear = "For " + year + ", " + rev + " was the game with the highest average review."
     reviewName = rev
-    return render_template('page3.html', reviewName=reviewName)
+    return render_template('page3.html', reviewName=reviewName, year_options=years, selYear=selYear)
 
-def highest_review_score_year():
+def highest_review_score_year(year):
     with open('video_games.json') as game_data:
         data3 = json.load(game_data)
-    year = request.args.get('review')
     highest = 0
-    rev = "" 
+    rev = "a" 
     for r in data3:
-        if r["Title"] == year:
+        if r["Release"]["Year"] == int(year):
             if r["Metrics"]["Review Score"] > highest: 
                 highest = r["Metrics"]["Review Score"]
                 rev = r["Title"]
-    return rev 
+    return rev
+
+@app.route("/year")
+def render_test(): 
+    years = get_year_options()
+    year = request.args.get('year')
+    reviewName = year
+    return render_template('page3.html', year_options=years, reviewName=reviewName)  
     
 @app.route("/p4")
 def render_page4():
-    years = get_year_options()
-    consoles = get_console_options()
-    return render_template('page4.html', console_options=consoles, year_options=years)
+    games = get_game_options()
+    return render_template('page4.html', game_options=games)
+
+
     
 if __name__=="__main__":
     app.run(debug=True)
