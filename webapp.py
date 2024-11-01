@@ -75,7 +75,7 @@ def render_fact2():
     years = get_year_options()
     year = request.args.get('year')
     rev = highest_review_score_year(year)
-    selYear = "For " + year + ", " + rev + " was the game with the highest average review."
+    selYear = "In " + year + ", " + rev + " was the game with the highest average review."
     reviewName = rev
     return render_template('page3.html', reviewName=reviewName, year_options=years, selYear=selYear)
 
@@ -100,11 +100,71 @@ def render_test():
     
 @app.route("/p4")
 def render_page4():
-    games = get_game_options()
+    games = get_game_options() 
+    game = request.args.get('game')
     return render_template('page4.html', game_options=games)
 
-
+@app.route("/thatGraph")
+def render_graph(): 
+    games = get_game_options()
+    game = request.args.get('game')
+    graph = get_graph()
+    graphdata = thing_test(game)
+    return render_template('page4.html', game_options=games, data=graphdata, graph=graph)
+    
+def get_graph():
+    graph = Markup("<div id=""chartContainer"" style=""height: 300px; width: 100%;""></div>")
+    return graph 
+    
+def thing_test(game):
+    with open('video_games.json') as game_data:
+        data = json.load(game_data)
+    graphdata = []
+    dp1 = 0
+    dp2 = 0
+    dp3 = 0
+    dp4 = 0
+    dp5 = 0
+    dp6 = 0
+    dp7 = 0
+    dp8 = 0
+    dp9 = 0
+    dp10 = 0
+    dp11 = 0
+    dp12 = 0
+    dp13 = 0
+    dp14 = 0
+    dp15 = 0
+    dp16 = 0
+    dp17 = 0
+    dp18 = 0
+    dp19 = 0
+    dp20 = 0
+    dataNames = ["AA", "AL", "AM", "AP", "AR", "CA", "CL", "CM", "CP", "CR", "MEA", "MEL", "MEM", "MEP", "MER", "MA", "ML", "MM", "MP", "MR"]
+    for c in data: 
+        if c["Title"] == game:
+            dp1 = {"label": dataNames[0], "y": c["Length"]["All PlayStyles"]["Average"]}
+            dp2 = {"label": dataNames[1], "y": c["Length"]["All PlayStyles"]["Leisure"]}
+            dp3 = {"label": dataNames[2], "y": c["Length"]["All PlayStyles"]["Median"]}
+            dp4 = {"label": dataNames[3], "y": c["Length"]["All PlayStyles"]["Polled"]}
+            dp5 = {"label": dataNames[4], "y": c["Length"]["All PlayStyles"]["Rushed"]}
+            dp6 = {"label": dataNames[5], "y": c["Length"]["Completionists"]["Average"]}
+            dp7 = {"label": dataNames[6], "y": c["Length"]["Completionists"]["Leisure"]}
+            dp8 = {"label": dataNames[7], "y": c["Length"]["Completionists"]["Median"]}
+            dp9 = {"label": dataNames[8], "y": c["Length"]["Completionists"]["Polled"]}
+            dp10 = {"label": dataNames[9], "y": c["Length"]["Completionists"]["Rushed"]}
+            dp11 = {"label": dataNames[10], "y": c["Length"]["Main + Extras"]["Average"]}
+            dp12 = {"label": dataNames[11], "y": c["Length"]["Main + Extras"]["Leisure"]}
+            dp13 = {"label": dataNames[12], "y": c["Length"]["Main + Extras"]["Median"]}
+            dp14 = {"label": dataNames[13], "y": c["Length"]["Main + Extras"]["Polled"]}
+            dp15 = {"label": dataNames[14], "y": c["Length"]["Main + Extras"]["Rushed"]}
+            dp16 = {"label": dataNames[15], "y": c["Length"]["Main Story"]["Average"]}
+            dp17 = {"label": dataNames[16], "y": c["Length"]["Main Story"]["Leisure"]}
+            dp18 = {"label": dataNames[17], "y": c["Length"]["Main Story"]["Median"]}
+            dp19 = {"label": dataNames[18], "y": c["Length"]["Main Story"]["Polled"]}
+            dp20 = {"label": dataNames[19], "y": c["Length"]["Main Story"]["Rushed"]}
+    graphdata = [dp1, dp2, dp3, dp4, dp5, dp6, dp7, dp8, dp9, dp10, dp11, dp12, dp13, dp14, dp15, dp16, dp17, dp18, dp19, dp20]
+    return graphdata
     
 if __name__=="__main__":
     app.run(debug=True)
-

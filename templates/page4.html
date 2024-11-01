@@ -9,12 +9,54 @@
 <div class="container">
 <h1> Fun Facts </h1>
 
-<form action="/">
+<form action="/thatGraph">
 	<select name="title" required>
 	{{ game_options }}
 	</select>
 	<input type="submit" value="Make a recommendation">
         </form>
 </div>
+
+<script>
+window.onload = function() {
+
+var dataPoints = [];
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2",
+	title: {
+		text: "Playstyle Times Data"
+	},
+	axisY: {
+		title: "Hours",
+		titleFontSize: 24,
+		includeZero: true
+	},
+	data: [{
+		type: "column",
+		yValueFormatString: "#,### Units",
+		dataPoints: {{ data }} 
+	}]
+});
+
+function addData(data) {
+	for (var i = 0; i < data.length; i++) {
+		dataPoints.push({
+			x: new Date(data[i].date),
+			y: data[i].units
+		});
+	}
+	chart.render();
+
+}
+
+$.getJSON("video_games.json", addData);
+
+}
+</script>
+
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
 {% endblock %}
 
